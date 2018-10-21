@@ -104,7 +104,7 @@ function makeSampleQuestions () {
         },
   ]
 
-  // sessionStorage.setItem('questions', JSON.stringify(questions))
+  sessionStorage.setItem('questions', JSON.stringify(questions))
   return questions
 };
 
@@ -208,6 +208,16 @@ function makeQuestionHTML(questionObject) {
 function loadQuiz() {
 
   // Gets questions and responses
+  // To save user time / data, sees if questions are cached, uses DB if not
+  try {
+    questions = JSON.parse(sessionStorage.getItem('questions'));
+  }
+
+  catch {
+    questions = makeSampleQuestions()
+    sessionStorage.setItem(JSON.stringify(questions))
+  }
+
   var questions = makeSampleQuestions();
   var responses = JSON.parse(sessionStorage.getItem('responses'));
 
